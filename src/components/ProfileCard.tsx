@@ -1,10 +1,17 @@
 import React from 'react';
-import { Card, Grid } from '@mui/material';
+import { Card, Grid, Box, Paper, Typography } from '@mui/material';
 
-const ProfileCard = () => {
+const ProfileCard = ({ data }: any) => {
+  console.log(data);
   return (
     <Grid item xs={3}>
-      <Card elevation={4}>Subscriber</Card>
+      <Paper elevation={4}>
+        <img src={data.avatar} alt='' />
+        <Box padding={1}>
+          {data.name}
+          <Typography variant='h6'>{data.city}</Typography>
+        </Box>
+      </Paper>
     </Grid>
   );
 };
