@@ -22,51 +22,55 @@ function App() {
   ));
 
   return (
-    <ColorModeContextProvider>
-      <Container maxWidth={'lg'} component={'main'}>
-        <CssBaseline>
-          <Box
-            sx={{
-              display: 'flex',
-              width: '100%',
-              alignItems: 'center',
-              justifyContent: 'center',
-              bgcolor: 'background.default',
-              color: 'text.primary',
-              borderRadius: 1,
-              p: 3,
-            }}
+    <Container maxWidth={'lg'} component={'main'}>
+      <CssBaseline>
+        <Box
+          sx={{
+            display: 'flex',
+            width: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            bgcolor: 'background.default',
+            color: 'text.primary',
+            borderRadius: 1,
+            p: 3,
+          }}
+        >
+          {theme.palette.mode} mode
+          <IconButton
+            sx={{ ml: 1 }}
+            onClick={colorMode.toggleColorMode}
+            color='inherit'
           >
-            {theme.palette.mode} mode
-            <IconButton
-              sx={{ ml: 1 }}
-              onClick={colorMode.toggleColorMode}
-              color='inherit'
-            >
-              {theme.palette.mode === 'dark' ? (
-                <Brightness7Icon />
-              ) : (
-                <Brightness4Icon />
-              )}
-            </IconButton>
-          </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: '100vh',
-            }}
-          >
-            <Grid container spacing={3}>
-              {renderSubscriber}
-              <AppPagination setData={(p: any) => setData(p)} />
-            </Grid>
-          </Box>
-        </CssBaseline>
-      </Container>
-    </ColorModeContextProvider>
+            {theme.palette.mode === 'dark' ? (
+              <Brightness7Icon />
+            ) : (
+              <Brightness4Icon />
+            )}
+          </IconButton>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+          }}
+        >
+          <Grid container spacing={3}>
+            {renderSubscriber}
+            <AppPagination setData={(p: any) => setData(p)} />
+          </Grid>
+        </Box>
+      </CssBaseline>
+    </Container>
   );
 }
 
-export default App;
+export default function WrappedApp() {
+  return (
+    <ColorModeContextProvider>
+      <App />
+    </ColorModeContextProvider>
+  );
+}

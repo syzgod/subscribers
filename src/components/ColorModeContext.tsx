@@ -3,12 +3,10 @@ import { createTheme, ThemeProvider } from '@mui/material';
 
 interface IColorModeContext {
   toggleColorMode: () => void;
-  mode: 'dark' | 'light';
 }
 
 export const ColorModeContext = React.createContext<IColorModeContext>({
   toggleColorMode: () => {},
-  mode: 'light',
 });
 
 export const ColorModeContextProvider = ({ children }: any) => {
@@ -17,10 +15,10 @@ export const ColorModeContextProvider = ({ children }: any) => {
     () => ({
       toggleColorMode: () => {
         setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+        console.log(mode);
       },
-      mode,
     }),
-    [mode]
+    []
   );
 
   const theme = React.useMemo(
