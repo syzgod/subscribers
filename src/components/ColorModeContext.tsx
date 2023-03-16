@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 import { createTheme, ThemeProvider } from '@mui/material';
 
 interface IColorModeContext {
@@ -11,15 +12,15 @@ export const ColorModeContext = React.createContext<IColorModeContext>({
 
 export const ColorModeContextProvider = ({ children }: any) => {
   const [mode, setMode] = React.useState<'light' | 'dark'>('light');
-  const colorMode = React.useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-        console.log(mode);
-      },
-    }),
-    []
-  );
+  const darkMode = useSelector((state: any) => state.theme.darkMode);
+
+  React.useMemo(() => {
+    if (darkMode) {
+      setMode('dark');
+    } else {
+      setMode('light');
+    }
+  }, [darkMode]);
 
   const theme = React.useMemo(
     () =>
@@ -31,11 +32,5 @@ export const ColorModeContextProvider = ({ children }: any) => {
     [mode]
   );
 
-  return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
-    </ColorModeContext.Provider>
-  );
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
-
-export const useColorMode = () => React.useContext(ColorModeContext);

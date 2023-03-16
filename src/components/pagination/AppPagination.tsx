@@ -41,7 +41,7 @@ const AppPagination = ({ setData }: any) => {
       <Pagination
         count={pagination.count}
         onChange={handlePageChange}
-        color='secondary'
+        color='primary'
       />
     </Box>
   );

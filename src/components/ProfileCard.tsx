@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import {
   Grid,
   Box,
@@ -7,15 +9,19 @@ import {
   CardHeader,
   Avatar,
   CardContent,
+  Modal,
 } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
+import InfoModal from './InfoModal';
 
 const ProfileCard = ({ data }: any) => {
-  console.log(data);
+  const [open, setOpen] = useState(false);
+
   return (
-    <Grid item xs={3}>
-      <Card elevation={4} sx={{ maxHeight: '250px' }}>
+    <Grid item xs={5} md={3} sm={3} lg={2}>
+      <Card elevation={6}>
         <CardHeader
+          titleTypographyProps={{ variant: 'h5' }}
           avatar={
             <Avatar
               alt={data.name}
@@ -24,20 +30,25 @@ const ProfileCard = ({ data }: any) => {
             />
           }
           title={data.name}
-          subheader={data.id}
           sx={{ fontSize: '20px' }}
         ></CardHeader>
         <CardContent>
           <Box>
-            <Typography variant='body2'>City: {data.city}</Typography>
-            <Typography variant='body1'>Country: {data.country}</Typography>
+            <Typography>ID: {data.id}</Typography>
+            <Typography>Country: {data.country}</Typography>
+            <Typography>City: {data.city}</Typography>
+            <Typography variant='body2'>Address: {data.address}</Typography>
             <Button
+              onClick={() => setOpen(true)}
               variant='contained'
-              color='secondary'
+              color='primary'
               endIcon={<InfoIcon />}
+              size='small'
+              sx={{ marginTop: '2px' }}
             >
               Details
             </Button>
+            <InfoModal open={open} setOpen={setOpen} data={data} />
           </Box>
         </CardContent>
       </Card>

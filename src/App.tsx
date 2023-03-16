@@ -1,29 +1,38 @@
 import * as React from 'react';
-import { Container, Grid, Box, IconButton } from '@mui/material';
-import { ThemeProvider, useTheme } from '@mui/material/styles';
+import { Container, Grid, Box, IconButton, TextField } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import ProfileCard from './components/ProfileCard';
 import AppPagination from './components/pagination/AppPagination';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import {
-  ColorModeContext,
-  ColorModeContextProvider,
-} from './components/ColorModeContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleTheme } from './store/reducers/themeSlice';
+import { enqueueSnackbar } from 'notistack';
 
 function App() {
   const [data, setData] = React.useState<any>([]);
-
+  //
   const theme = useTheme();
-  const colorMode = React.useContext(ColorModeContext);
+  const dispatch = useDispatch();
+  const darkMode = useSelector((state: any) => state.theme.darkMode);
 
   const renderSubscriber = data.map((profile: any) => (
-    <ProfileCard data={profile} />
+    <ProfileCard key={profile.id} data={profile} />
   ));
 
   return (
-    <Container maxWidth={'lg'} component={'main'}>
-      <CssBaseline>
+    <CssBaseline>
+      <Container
+        maxWidth={'lg'}
+        component={'main'}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+        }}
+      >
         <Box
           sx={{
             display: 'flex',
@@ -36,10 +45,10 @@ function App() {
             p: 3,
           }}
         >
-          {theme.palette.mode} mode
+          {darkMode ? 'Dark' : 'Light'} mode
           <IconButton
             sx={{ ml: 1 }}
-            onClick={colorMode.toggleColorMode}
+            onClick={() => dispatch(toggleTheme())}
             color='inherit'
           >
             {theme.palette.mode === 'dark' ? (
@@ -49,28 +58,34 @@ function App() {
             )}
           </IconButton>
         </Box>
+        <TextField id='standard-basic' label='Search' variant='standard' />
+        <AppPagination setData={(p: any) => setData(p)} />
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            height: '100vh',
           }}
         >
-          <Grid container spacing={3}>
+          <Grid
+            container
+            spacing={2}
+            columns={6}
+            wrap='wrap'
+            justifyContent={{ xs: 'center', sm: 'flex-start' }}
+            sx={{
+              display: 'flex',
+
+              alignItems: 'center',
+            }}
+          >
             {renderSubscriber}
-            <AppPagination setData={(p: any) => setData(p)} />
           </Grid>
         </Box>
-      </CssBaseline>
-    </Container>
+        <AppPagination setData={(p: any) => setData(p)} />
+      </Container>
+    </CssBaseline>
   );
 }
 
-export default function WrappedApp() {
-  return (
-    <ColorModeContextProvider>
-      <App />
-    </ColorModeContextProvider>
-  );
-}
+export default App;
