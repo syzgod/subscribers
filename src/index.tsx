@@ -8,10 +8,11 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ColorModeContextProvider } from './components/ColorModeContext';
 import { SnackbarProvider } from 'notistack';
 import { MaterialDesignContent } from 'notistack';
+import styled from '@emotion/styled';
 
 const StyledMaterialDesignContent = styled(MaterialDesignContent)(() => ({
   '&.notistack-MuiContent-success': {
-    backgroundColor: '#2D7738',
+    backgroundColor: '#1D7912',
   },
   '&.notistack-MuiContent-error': {
     backgroundColor: '#970C0C',

@@ -12,6 +12,9 @@ export const fetchSubscribersData = (from: number, to: number) => {
     })
     .catch((error) => {
       console.error('Error fetching user data:', error);
+      enqueueSnackbar(`Error occurred during fetching`, {
+        variant: 'error',
+      });
       throw error;
     });
 };

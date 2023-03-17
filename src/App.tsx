@@ -1,5 +1,12 @@
 import * as React from 'react';
-import { Container, Grid, Box, IconButton, TextField } from '@mui/material';
+import {
+  Container,
+  Grid,
+  Box,
+  IconButton,
+  TextField,
+  Button,
+} from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import ProfileCard from './components/ProfileCard';
@@ -8,7 +15,7 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleTheme } from './store/reducers/themeSlice';
-import { enqueueSnackbar } from 'notistack';
+import SearchIcon from '@mui/icons-material/Search';
 
 function App() {
   const [data, setData] = React.useState<any>([]);
@@ -58,7 +65,18 @@ function App() {
             )}
           </IconButton>
         </Box>
-        <TextField id='standard-basic' label='Search' variant='standard' />
+        <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+          <SearchIcon sx={{ color: 'action.active', mr: 1, my: 3.5 }} />
+          <TextField
+            id='standard-basic'
+            label='Search'
+            variant='standard'
+            helperText='Please enter a name or country'
+          />
+        </Box>
+        <Button variant='contained' sx={{ marginTop: '10px' }}>
+          Search
+        </Button>
         <AppPagination setData={(p: any) => setData(p)} />
         <Box
           sx={{
