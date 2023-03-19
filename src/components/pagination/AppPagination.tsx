@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Pagination, Box } from '@mui/material';
 import { fetchSubscribersData } from './../services/index';
+import { useGetAllSubscribersQuery } from '../services/subscribers';
 
 const ITEMS_PER_PAGE = 7;
 
@@ -10,6 +11,9 @@ const AppPagination = ({ setData }: any) => {
     from: 0,
     to: ITEMS_PER_PAGE,
   });
+
+  const { data } = useGetAllSubscribersQuery('subscriber');
+  console.log(data);
 
   useEffect(() => {
     fetchSubscribersData(pagination.from, pagination.to).then((response) => {

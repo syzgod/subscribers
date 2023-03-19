@@ -9,6 +9,8 @@ import { ColorModeContextProvider } from './components/ColorModeContext';
 import { SnackbarProvider } from 'notistack';
 import { MaterialDesignContent } from 'notistack';
 import styled from '@emotion/styled';
+import { ApiProvider } from '@reduxjs/toolkit/dist/query/react';
+import { subscribersApi } from './components/services/subscribers';
 
 const StyledMaterialDesignContent = styled(MaterialDesignContent)(() => ({
   '&.notistack-MuiContent-success': {
@@ -40,11 +42,13 @@ root.render(
         error: StyledMaterialDesignContent,
       }}
     >
-      <Provider store={store}>
-        <ColorModeContextProvider>
-          <RouterProvider router={router} />
-        </ColorModeContextProvider>
-      </Provider>
+      <ApiProvider api={subscribersApi}>
+        <Provider store={store}>
+          <ColorModeContextProvider>
+            <RouterProvider router={router} />
+          </ColorModeContextProvider>
+        </Provider>
+      </ApiProvider>
     </SnackbarProvider>
   </React.StrictMode>
 );
