@@ -16,17 +16,36 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleTheme } from './store/reducers/themeSlice';
 import SearchIcon from '@mui/icons-material/Search';
+import { useGetAllSubscribersQuery } from './components/services/subscribers';
+import { enqueueSnackbar } from 'notistack';
 
 function App() {
-  const [data, setData] = React.useState<any>([]);
-  //
   const theme = useTheme();
   const dispatch = useDispatch();
   const darkMode = useSelector((state: any) => state.theme.darkMode);
 
-  const renderSubscriber = data.map((profile: any) => (
-    <ProfileCard key={profile.id} data={profile} />
-  ));
+  const {
+    data = [],
+    error,
+    isLoading,
+    isSuccess,
+  } = useGetAllSubscribersQuery('subscriber');
+
+  if (isLoading) {
+    enqueueSnackbar('Fetching data...', { variant: 'info' });
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    enqueueSnackbar(`Error occurred during fetching`, {
+      variant: 'error',
+    });
+    return <div>Error</div>;
+  }
+
+  if (isSuccess) {
+    enqueueSnackbar('Data fetched!', { variant: 'success' });
+  }
 
   return (
     <CssBaseline>
@@ -40,6 +59,11 @@ function App() {
           flexDirection: 'column',
         }}
       >
+        {/* <ul>
+          {data.map((subscriber: any) => (
+            <li key={subscriber.id}>{subscriber.name}</li>
+          ))}
+        </ul> */}
         <Box
           sx={{
             display: 'flex',
@@ -77,7 +101,7 @@ function App() {
         <Button variant='contained' sx={{ marginTop: '10px' }}>
           Search
         </Button>
-        <AppPagination setData={(p: any) => setData(p)} />
+        <AppPagination data={data} />
         <Box
           sx={{
             display: 'flex',
@@ -97,10 +121,18 @@ function App() {
               alignItems: 'center',
             }}
           >
-            {renderSubscriber}
+            {data.map((profile: any) => (
+              <ProfileCard
+                key={profile.id}
+                data={profile}
+                error={error}
+                isLoading={isLoading}
+                isSuccess={isSuccess}
+              />
+            ))}
           </Grid>
         </Box>
-        <AppPagination setData={(p: any) => setData(p)} />
+        <AppPagination data={data} />
       </Container>
     </CssBaseline>
   );

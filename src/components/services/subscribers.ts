@@ -1,17 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-interface Post {
-  id: number;
-  name: string;
-}
-interface ListResponse<T> {
-  page: number;
-  per_page: number;
-  total: number;
-  total_pages: number;
-  data: T[];
-}
-
 export const subscribersApi = createApi({
   reducerPath: 'subscribersApi',
   baseQuery: fetchBaseQuery({

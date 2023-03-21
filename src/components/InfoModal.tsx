@@ -1,4 +1,5 @@
 import { Box, Button, Modal, Typography } from '@mui/material';
+import { enqueueSnackbar } from 'notistack';
 
 const style = {
   position: 'absolute',
@@ -12,13 +13,37 @@ const style = {
   p: 4,
 };
 
-const InfoModal = ({ open, setOpen, data }: any) => {
+const InfoModal = ({
+  open,
+  setOpen,
+  data,
+  error,
+  isLoading,
+  isSuccess,
+}: any) => {
+  console.log(data);
   const handleClose = () => setOpen(false);
 
   const dateFormatter = (date: string) => {
     const unformattedDate = new Date(date);
     return unformattedDate.toLocaleString();
   };
+
+  if (isLoading) {
+    enqueueSnackbar('Fetching data...', { variant: 'info' });
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    enqueueSnackbar(`Error occurred during fetching`, {
+      variant: 'error',
+    });
+    return <div>Error</div>;
+  }
+
+  if (isSuccess) {
+    enqueueSnackbar('Data fetched!', { variant: 'success' });
+  }
 
   return (
     <Modal
@@ -49,11 +74,11 @@ const InfoModal = ({ open, setOpen, data }: any) => {
             Accounts:{' '}
           </Typography>
           <Typography>
-            Created: {dateFormatter(data.accounts[0].created)}
+            Created: {dateFormatter(data.accounts[0]?.created)}
           </Typography>
-          <Typography>Account name: {data.accounts[0].name}</Typography>
-          <Typography>Account balance: {data.accounts[0].balance}</Typography>
-          Subscriber ID: {data.accounts[0].subscriberId}
+          <Typography>Account name: {data.accounts[0]?.name}</Typography>
+          <Typography>Account balance: {data.accounts[0]?.balance}</Typography>
+          Subscriber ID: {data.accounts[0]?.subscriberId}
         </Typography>
         <Typography
           id='modal-modal-description'
@@ -68,11 +93,11 @@ const InfoModal = ({ open, setOpen, data }: any) => {
             Calls:{' '}
           </Typography>
           <Typography>
-            Created: {dateFormatter(data.calls[0].created)}
+            Created: {dateFormatter(data.calls[0]?.created)}
           </Typography>
-          <Typography>Account name: {data.calls[0].name}</Typography>
-          <Typography>Account balance: {data.calls[0].balance}</Typography>
-          Subscriber ID: {data.calls[0].subscriberId}
+          <Typography>Account name: {data.calls[0]?.name}</Typography>
+          <Typography>Account balance: {data.calls[0]?.balance}</Typography>
+          Subscriber ID: {data.calls[0]?.subscriberId}
         </Typography>
         <Button
           variant='contained'

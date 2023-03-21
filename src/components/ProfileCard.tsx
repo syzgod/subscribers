@@ -14,8 +14,16 @@ import {
 import InfoIcon from '@mui/icons-material/Info';
 import InfoModal from './InfoModal';
 
-const ProfileCard = ({ data }: any) => {
+const ProfileCard = ({ data, error, isLoading, isSuccess }: any) => {
   const [open, setOpen] = useState(false);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error</div>;
+  }
 
   return (
     <Grid item xs={5} md={3} sm={3} lg={2}>
@@ -48,7 +56,14 @@ const ProfileCard = ({ data }: any) => {
             >
               Details
             </Button>
-            <InfoModal open={open} setOpen={setOpen} data={data} />
+            <InfoModal
+              open={open}
+              setOpen={setOpen}
+              data={data}
+              error={error}
+              isLoading={isLoading}
+              isSuccess={isSuccess}
+            />
           </Box>
         </CardContent>
       </Card>

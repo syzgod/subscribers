@@ -1,29 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { Pagination, Box } from '@mui/material';
-import { fetchSubscribersData } from './../services/index';
-import { useGetAllSubscribersQuery } from '../services/subscribers';
 
 const ITEMS_PER_PAGE = 7;
 
-const AppPagination = ({ setData }: any) => {
+const AppPagination = ({ data }: any) => {
   const [pagination, setPagination] = useState({
     count: 0,
     from: 0,
     to: ITEMS_PER_PAGE,
   });
 
-  const { data } = useGetAllSubscribersQuery('subscriber');
-  console.log(data);
+  const getSubscribersPerPage = (from: number, to: number) => {
+    const subscribers = data.slice(from, to);
+    setPagination({ ...pagination, count: subscribers.length });
+  };
 
   useEffect(() => {
-    fetchSubscribersData(pagination.from, pagination.to).then((response) => {
-      setPagination({
-        ...pagination,
-        count: Math.ceil(response.count / ITEMS_PER_PAGE),
-      });
-      setData(response.data);
+    getSubscribersPerPage(pagination.from, pagination.to);
+    setPagination({
+      ...pagination,
+      count: Math.ceil(pagination.count / ITEMS_PER_PAGE),
     });
-  }, [pagination.from, pagination.to]);
+  }, []);
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
