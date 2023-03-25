@@ -6,46 +6,36 @@ import {
   IconButton,
   TextField,
   Button,
+  Pagination,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import ProfileCard from './components/ProfileCard';
-import AppPagination from './components/pagination/AppPagination';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleTheme } from './store/reducers/themeSlice';
 import SearchIcon from '@mui/icons-material/Search';
-import { useGetAllSubscribersQuery } from './components/services/subscribers';
-import { enqueueSnackbar } from 'notistack';
+import SubscribersList from './components/SubscribersList';
+import {
+  SubscribersListResponse,
+  useListSubscribersQuery,
+} from './components/services/subscribers';
 
 function App() {
+  const [page, setPage] = React.useState(1);
+  const {
+    data: subscribers,
+    isLoading,
+    isFetching,
+  } = useListSubscribersQuery<SubscribersListResponse>(page);
+
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
   const theme = useTheme();
   const dispatch = useDispatch();
   const darkMode = useSelector((state: any) => state.theme.darkMode);
-
-  const {
-    data = [],
-    error,
-    isLoading,
-    isSuccess,
-  } = useGetAllSubscribersQuery('subscriber');
-
-  if (isLoading) {
-    enqueueSnackbar('Fetching data...', { variant: 'info' });
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    enqueueSnackbar(`Error occurred during fetching`, {
-      variant: 'error',
-    });
-    return <div>Error</div>;
-  }
-
-  if (isSuccess) {
-    enqueueSnackbar('Data fetched!', { variant: 'success' });
-  }
 
   return (
     <CssBaseline>
@@ -59,11 +49,6 @@ function App() {
           flexDirection: 'column',
         }}
       >
-        {/* <ul>
-          {data.map((subscriber: any) => (
-            <li key={subscriber.id}>{subscriber.name}</li>
-          ))}
-        </ul> */}
         <Box
           sx={{
             display: 'flex',
@@ -101,14 +86,30 @@ function App() {
         <Button variant='contained' sx={{ marginTop: '10px' }}>
           Search
         </Button>
-        <AppPagination data={data} />
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            flexDirection: 'column',
           }}
         >
+          <Box
+            justifyContent={'center'}
+            alignItems={'center'}
+            display={'flex'}
+            sx={{ margin: '20px 0px' }}
+          >
+            <Pagination
+              size='large'
+              count={10}
+              page={page}
+              onChange={handleChange}
+              color='primary'
+              showFirstButton
+              showLastButton
+            />
+          </Box>
           <Grid
             container
             spacing={2}
@@ -117,22 +118,29 @@ function App() {
             justifyContent={{ xs: 'center', sm: 'flex-start' }}
             sx={{
               display: 'flex',
-
+              marginTop: '10px',
               alignItems: 'center',
             }}
           >
-            {data.map((profile: any) => (
-              <ProfileCard
-                key={profile.id}
-                data={profile}
-                error={error}
-                isLoading={isLoading}
-                isSuccess={isSuccess}
-              />
-            ))}
+            <SubscribersList subscribers={subscribers} isLoading={isLoading} />
           </Grid>
+          <Box
+            justifyContent={'center'}
+            alignItems={'center'}
+            display={'flex'}
+            sx={{ margin: '20px 0px' }}
+          >
+            <Pagination
+              size='large'
+              count={10}
+              page={page}
+              onChange={handleChange}
+              color='primary'
+              showFirstButton
+              showLastButton
+            />
+          </Box>
         </Box>
-        <AppPagination data={data} />
       </Container>
     </CssBaseline>
   );

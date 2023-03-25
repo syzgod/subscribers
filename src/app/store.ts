@@ -1,15 +1,15 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { themeSlice } from './../store/reducers/themeSlice';
-import { subscribersApi } from './../components/services/subscribers';
+import { subscribers } from './../components/services/subscribers';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 
 export const store = configureStore({
   reducer: {
     theme: themeSlice.reducer,
-    [subscribersApi.reducerPath]: subscribersApi.reducer,
+    [subscribers.reducerPath]: subscribers.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(subscribersApi.middleware),
+    getDefaultMiddleware().concat(subscribers.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;

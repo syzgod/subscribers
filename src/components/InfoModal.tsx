@@ -13,14 +13,7 @@ const style = {
   p: 4,
 };
 
-const InfoModal = ({
-  open,
-  setOpen,
-  data,
-  error,
-  isLoading,
-  isSuccess,
-}: any) => {
+const InfoModal = ({ open, setOpen, data, isLoading, isSuccess }: any) => {
   console.log(data);
   const handleClose = () => setOpen(false);
 
@@ -32,13 +25,6 @@ const InfoModal = ({
   if (isLoading) {
     enqueueSnackbar('Fetching data...', { variant: 'info' });
     return <div>Loading...</div>;
-  }
-
-  if (error) {
-    enqueueSnackbar(`Error occurred during fetching`, {
-      variant: 'error',
-    });
-    return <div>Error</div>;
   }
 
   if (isSuccess) {

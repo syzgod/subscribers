@@ -9,23 +9,19 @@ import {
   CardHeader,
   Avatar,
   CardContent,
-  Modal,
 } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import InfoModal from './InfoModal';
 
-const ProfileCard = ({ data, error, isLoading, isSuccess }: any) => {
+const ProfileCard = ({ data, isLoading }: any) => {
   const [open, setOpen] = useState(false);
+  console.log(data);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>Error</div>;
-  }
-
-  return (
+  return data.map((data: any) => (
     <Grid item xs={5} md={3} sm={3} lg={2}>
       <Card elevation={6}>
         <CardHeader
@@ -60,15 +56,13 @@ const ProfileCard = ({ data, error, isLoading, isSuccess }: any) => {
               open={open}
               setOpen={setOpen}
               data={data}
-              error={error}
               isLoading={isLoading}
-              isSuccess={isSuccess}
             />
           </Box>
         </CardContent>
       </Card>
     </Grid>
-  );
+  ));
 };
 
 export default ProfileCard;
