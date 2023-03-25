@@ -1,9 +1,3 @@
-import { useState } from 'react';
-import {
-  SubscribersListResponse,
-  useListSubscribersQuery,
-} from './services/subscribers';
-import { Pagination, Box } from '@mui/material';
 import ProfileCard from './ProfileCard';
 
 const SubscribersList = ({ subscribers, isLoading }: any) => {
@@ -17,11 +11,7 @@ const SubscribersList = ({ subscribers, isLoading }: any) => {
     return <div>No subscribers found :(</div>;
   }
 
-  return (
-    <>
-      <ProfileCard data={subscribers} />
-    </>
-  );
+  return <ProfileCard data={subscribers} />;
 };
 
 export default SubscribersList;
