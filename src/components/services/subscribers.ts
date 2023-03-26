@@ -25,38 +25,32 @@ interface ListResponse<T> {
   limit: string;
   totalPages: number;
   totalItems: number;
+  isSuccess: boolean;
   isLoading: boolean;
   isFetching: boolean;
+  isError: boolean;
 }
 
-interface Item {
-  id: number;
-  name: string;
-  description: string;
-}
-
-interface ItemListResponse {
-  data: Item[];
-  totalPages: number;
-  totalItems: number;
-}
-
-const url = 'https://604868d1b801a40017ccdac6.mockapi.io/api/v1/subscriber/';
+const url = 'https://604868d1b801a40017ccdac6.mockapi.io/api/v1/subscriber';
 
 export const subscribers = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: url,
   }),
   endpoints: (builder) => ({
-    listSubscribers: builder.query<
+    getSubscribers: builder.query<
       ListResponse<Subscribers>,
       { page?: number; limit?: number }
     >({
       query: ({ page = 1, limit = '7' }) => `?page=${page}&limit=${limit}`,
+    }),
+    getAllSubscribers: builder.query({
+      query: () => '/',
     }),
   }),
 });
 
 export type SubscribersListResponse = ListResponse<Subscribers>;
 
-export const { useListSubscribersQuery } = subscribers;
+export const { useGetSubscribersQuery, useGetAllSubscribersQuery } =
+  subscribers;

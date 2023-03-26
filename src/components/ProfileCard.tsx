@@ -22,7 +22,7 @@ const ProfileCard = ({ data, isLoading }: any) => {
   }
 
   return data.map((data: any) => (
-    <Grid item xs={5} md={3} sm={3} lg={3}>
+    <Grid item xs={5} md={3} sm={3} lg={3} key={data.id}>
       <Card elevation={6}>
         <CardHeader
           titleTypographyProps={{ variant: 'h5' }}

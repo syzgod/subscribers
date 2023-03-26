@@ -4,8 +4,6 @@ import {
   Grid,
   Box,
   IconButton,
-  TextField,
-  Button,
   Pagination,
   MenuItem,
   InputLabel,
@@ -18,21 +16,27 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleTheme } from './store/reducers/themeSlice';
-import SearchIcon from '@mui/icons-material/Search';
 import SubscribersList from './components/SubscribersList';
 import {
   SubscribersListResponse,
-  useListSubscribersQuery,
+  useGetAllSubscribersQuery,
+  useGetSubscribersQuery,
 } from './components/services/subscribers';
+import { enqueueSnackbar } from 'notistack';
+import SearchBar from './components/SearchBar';
 
 function App() {
   const [page, setPage] = React.useState(1);
-  const [limit, setLimit] = React.useState(7);
+  const [pageSize, setLimit] = React.useState(7);
   const {
     data: subscribers,
     isLoading,
-    isFetching,
-  } = useListSubscribersQuery<SubscribersListResponse>({ page, limit });
+    isError,
+  } = useGetSubscribersQuery<SubscribersListResponse>({
+    page,
+    limit: pageSize,
+  });
+  const { data } = useGetAllSubscribersQuery('/');
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -45,6 +49,16 @@ function App() {
   const theme = useTheme();
   const dispatch = useDispatch();
   const darkMode = useSelector((state: any) => state.theme.darkMode);
+
+  if (isLoading) {
+    enqueueSnackbar('Fetching data...', {
+      variant: 'info',
+    });
+  }
+
+  if (isError) {
+    return <h1>Error occurred during fetching</h1>;
+  }
 
   return (
     <CssBaseline>
@@ -83,18 +97,7 @@ function App() {
             )}
           </IconButton>
         </Box>
-        <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-          <SearchIcon sx={{ color: 'action.active', mr: 1, my: 3.5 }} />
-          <TextField
-            id='standard-basic'
-            label='Search'
-            variant='standard'
-            helperText='Please enter a name or country'
-          />
-        </Box>
-        <Button variant='contained' sx={{ marginTop: '10px' }}>
-          Search
-        </Button>
+        <SearchBar />
         <Box
           sx={{
             display: 'flex',
@@ -120,7 +123,7 @@ function App() {
               <Select
                 labelId='simple-select-autowidth-label'
                 id='simple-select-autowidth'
-                value={limit.toString()}
+                value={pageSize.toString()}
                 onChange={onSelectChange}
                 autoWidth
                 label='sub'
@@ -132,7 +135,7 @@ function App() {
             </FormControl>
             <Pagination
               size='large'
-              count={10}
+              count={Math.ceil(data?.length / pageSize)}
               page={page}
               onChange={handleChange}
               color='primary'
@@ -171,7 +174,7 @@ function App() {
               <Select
                 labelId='simple-select-autowidth-label'
                 id='simple-select-autowidth'
-                value={limit.toString()}
+                value={pageSize.toString()}
                 onChange={onSelectChange}
                 autoWidth
                 label='Sub'
@@ -183,7 +186,7 @@ function App() {
             </FormControl>
             <Pagination
               size='large'
-              count={10}
+              count={Math.ceil(data?.length / pageSize)}
               page={page}
               onChange={handleChange}
               color='primary'
