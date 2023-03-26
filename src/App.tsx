@@ -7,7 +7,11 @@ import {
   TextField,
   Button,
   Pagination,
+  MenuItem,
+  InputLabel,
+  FormControl,
 } from '@mui/material';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
@@ -23,14 +27,19 @@ import {
 
 function App() {
   const [page, setPage] = React.useState(1);
+  const [limit, setLimit] = React.useState(7);
   const {
     data: subscribers,
     isLoading,
     isFetching,
-  } = useListSubscribersQuery<SubscribersListResponse>(page);
+  } = useListSubscribersQuery<SubscribersListResponse>({ page, limit });
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
+  };
+
+  const onSelectChange = (event: SelectChangeEvent) => {
+    setLimit(parseInt(event.target.value));
   };
 
   const theme = useTheme();
@@ -100,6 +109,27 @@ function App() {
             display={'flex'}
             sx={{ margin: '20px 0px' }}
           >
+            <FormControl
+              variant='standard'
+              sx={{ m: 1, minWidth: 80 }}
+              size='small'
+            >
+              <InputLabel id='simple-select-autowidth-label'>
+                Subscribers
+              </InputLabel>
+              <Select
+                labelId='simple-select-autowidth-label'
+                id='simple-select-autowidth'
+                value={limit.toString()}
+                onChange={onSelectChange}
+                autoWidth
+                label='sub'
+              >
+                <MenuItem value={7}>7</MenuItem>
+                <MenuItem value={10}>10</MenuItem>
+                <MenuItem value={20}>20</MenuItem>
+              </Select>
+            </FormControl>
             <Pagination
               size='large'
               count={10}
@@ -130,6 +160,27 @@ function App() {
             display={'flex'}
             sx={{ margin: '20px 0px' }}
           >
+            <FormControl
+              variant='standard'
+              sx={{ m: 1, minWidth: 80 }}
+              size='small'
+            >
+              <InputLabel id='simple-select-autowidth-label'>
+                Subscribers
+              </InputLabel>
+              <Select
+                labelId='simple-select-autowidth-label'
+                id='simple-select-autowidth'
+                value={limit.toString()}
+                onChange={onSelectChange}
+                autoWidth
+                label='Sub'
+              >
+                <MenuItem value={7}>7</MenuItem>
+                <MenuItem value={10}>10</MenuItem>
+                <MenuItem value={20}>20</MenuItem>
+              </Select>
+            </FormControl>
             <Pagination
               size='large'
               count={10}

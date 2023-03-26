@@ -21,8 +21,24 @@ interface Account {
 
 interface ListResponse<T> {
   data: T[];
+  page: number;
+  limit: string;
+  totalPages: number;
+  totalItems: number;
   isLoading: boolean;
   isFetching: boolean;
+}
+
+interface Item {
+  id: number;
+  name: string;
+  description: string;
+}
+
+interface ItemListResponse {
+  data: Item[];
+  totalPages: number;
+  totalItems: number;
 }
 
 const url = 'https://604868d1b801a40017ccdac6.mockapi.io/api/v1/subscriber/';
@@ -32,8 +48,11 @@ export const subscribers = createApi({
     baseUrl: url,
   }),
   endpoints: (builder) => ({
-    listSubscribers: builder.query<ListResponse<Subscribers>, number | void>({
-      query: (page = 1) => `?page=${page}&limit=7`,
+    listSubscribers: builder.query<
+      ListResponse<Subscribers>,
+      { page?: number; limit?: number }
+    >({
+      query: ({ page = 1, limit = '7' }) => `?page=${page}&limit=${limit}`,
     }),
   }),
 });
