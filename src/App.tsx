@@ -32,6 +32,7 @@ function App() {
     data: subscribers,
     isLoading,
     isError,
+    isSuccess,
   } = useGetSubscribersQuery<SubscribersListResponse>({
     page,
     limit: pageSize,
@@ -97,7 +98,9 @@ function App() {
             )}
           </IconButton>
         </Box>
-        <SearchBar />
+        {isSuccess && (
+          <SearchBar data={data} isLoading={isLoading} isSuccess={isSuccess} />
+        )}
         <Box
           sx={{
             display: 'flex',
@@ -106,43 +109,45 @@ function App() {
             flexDirection: 'column',
           }}
         >
-          <Box
-            justifyContent={'center'}
-            alignItems={'center'}
-            display={'flex'}
-            sx={{ margin: '20px 0px' }}
-          >
-            <FormControl
-              variant='standard'
-              sx={{ m: 1, minWidth: 80 }}
-              size='small'
+          {isSuccess && (
+            <Box
+              justifyContent={'center'}
+              alignItems={'center'}
+              display={'flex'}
+              sx={{ margin: '20px 0px' }}
             >
-              <InputLabel id='simple-select-autowidth-label'>
-                Subscribers
-              </InputLabel>
-              <Select
-                labelId='simple-select-autowidth-label'
-                id='simple-select-autowidth'
-                value={pageSize.toString()}
-                onChange={onSelectChange}
-                autoWidth
-                label='sub'
+              <FormControl
+                variant='standard'
+                sx={{ m: 1, minWidth: 80 }}
+                size='small'
               >
-                <MenuItem value={7}>7</MenuItem>
-                <MenuItem value={10}>10</MenuItem>
-                <MenuItem value={20}>20</MenuItem>
-              </Select>
-            </FormControl>
-            <Pagination
-              size='large'
-              count={Math.ceil(data?.length / pageSize)}
-              page={page}
-              onChange={handleChange}
-              color='primary'
-              showFirstButton
-              showLastButton
-            />
-          </Box>
+                <InputLabel id='simple-select-autowidth-label'>
+                  Subscribers
+                </InputLabel>
+                <Select
+                  labelId='simple-select-autowidth-label'
+                  id='simple-select-autowidth'
+                  value={pageSize.toString()}
+                  onChange={onSelectChange}
+                  autoWidth
+                  label='sub'
+                >
+                  <MenuItem value={7}>7</MenuItem>
+                  <MenuItem value={10}>10</MenuItem>
+                  <MenuItem value={20}>20</MenuItem>
+                </Select>
+              </FormControl>
+              <Pagination
+                size='large'
+                count={Math.ceil(data?.length / pageSize)}
+                page={page}
+                onChange={handleChange}
+                color='primary'
+                showFirstButton
+                showLastButton
+              />
+            </Box>
+          )}
           <Grid
             container
             spacing={2}
@@ -157,43 +162,45 @@ function App() {
           >
             <SubscribersList subscribers={subscribers} isLoading={isLoading} />
           </Grid>
-          <Box
-            justifyContent={'center'}
-            alignItems={'center'}
-            display={'flex'}
-            sx={{ margin: '20px 0px' }}
-          >
-            <FormControl
-              variant='standard'
-              sx={{ m: 1, minWidth: 80 }}
-              size='small'
+          {isSuccess && (
+            <Box
+              justifyContent={'center'}
+              alignItems={'center'}
+              display={'flex'}
+              sx={{ margin: '20px 0px' }}
             >
-              <InputLabel id='simple-select-autowidth-label'>
-                Subscribers
-              </InputLabel>
-              <Select
-                labelId='simple-select-autowidth-label'
-                id='simple-select-autowidth'
-                value={pageSize.toString()}
-                onChange={onSelectChange}
-                autoWidth
-                label='Sub'
+              <FormControl
+                variant='standard'
+                sx={{ m: 1, minWidth: 80 }}
+                size='small'
               >
-                <MenuItem value={7}>7</MenuItem>
-                <MenuItem value={10}>10</MenuItem>
-                <MenuItem value={20}>20</MenuItem>
-              </Select>
-            </FormControl>
-            <Pagination
-              size='large'
-              count={Math.ceil(data?.length / pageSize)}
-              page={page}
-              onChange={handleChange}
-              color='primary'
-              showFirstButton
-              showLastButton
-            />
-          </Box>
+                <InputLabel id='simple-select-autowidth-label'>
+                  Subscribers
+                </InputLabel>
+                <Select
+                  labelId='simple-select-autowidth-label'
+                  id='simple-select-autowidth'
+                  value={pageSize.toString()}
+                  onChange={onSelectChange}
+                  autoWidth
+                  label='Sub'
+                >
+                  <MenuItem value={7}>7</MenuItem>
+                  <MenuItem value={10}>10</MenuItem>
+                  <MenuItem value={20}>20</MenuItem>
+                </Select>
+              </FormControl>
+              <Pagination
+                size='large'
+                count={Math.ceil(data?.length / pageSize)}
+                page={page}
+                onChange={handleChange}
+                color='primary'
+                showFirstButton
+                showLastButton
+              />
+            </Box>
+          )}
         </Box>
       </Container>
     </CssBaseline>
