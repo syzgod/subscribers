@@ -2,27 +2,23 @@ import { Box, Button, FormControl, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import React from 'react';
 
-const SearchBar = ({ data, isLoading, isSuccess }: any) => {
-  const [searchResults, setSearchResults] = React.useState('Norman');
+const SearchBar = ({ data, isSuccess }: any) => {
+  const [inputText, setInputText] = React.useState('');
 
-  if (isSuccess) {
-    console.log(data.map((items: any) => items.name.includes(searchResults)));
+  if (isSuccess && inputText) {
+    const matchingItems = data.filter((item: any) =>
+      item.name.toLowerCase().includes(inputText.toLowerCase())
+    );
+    const matchingNames = matchingItems.map((item: any) => item.name);
+    console.log(matchingNames);
   }
 
   const handleSearch = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setSearchResults(e.target.value);
-    console.log(searchResults);
+    setInputText(e.target.value);
+    console.log(inputText);
   };
-
-  //   if (!isLoading) {
-  //     const searchResult = data.map((subs: any) =>
-  //       subs.filter((subs: any) => subs.id.includes(searchResults))
-  //     );
-  //
-  //     console.log(searchResult);
-  //   }
 
   return (
     <FormControl>
@@ -33,7 +29,7 @@ const SearchBar = ({ data, isLoading, isSuccess }: any) => {
           label='Search'
           variant='standard'
           helperText='Please enter a name or country'
-          value={searchResults}
+          value={inputText}
           onChange={handleSearch}
         />
       </Box>

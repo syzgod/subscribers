@@ -29,6 +29,7 @@ interface ListResponse<T> {
   isLoading: boolean;
   isFetching: boolean;
   isError: boolean;
+  error: Error;
 }
 
 const url = 'https://604868d1b801a40017ccdac6.mockapi.io/api/v1/subscriber';

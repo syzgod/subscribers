@@ -26,12 +26,13 @@ import { enqueueSnackbar } from 'notistack';
 import SearchBar from './components/SearchBar';
 
 function App() {
-  const [page, setPage] = React.useState(1);
-  const [pageSize, setLimit] = React.useState(7);
+  const [page, setPage] = React.useState<number>(1);
+  const [pageSize, setLimit] = React.useState<number>(7);
   const {
     data: subscribers,
     isLoading,
     isError,
+    error,
     isSuccess,
   } = useGetSubscribersQuery<SubscribersListResponse>({
     page,
@@ -59,6 +60,10 @@ function App() {
 
   if (isError) {
     return <h1>Error occurred during fetching</h1>;
+  }
+
+  if (error) {
+    return <div>An error has occurred: {error.message}</div>;
   }
 
   return (
@@ -98,9 +103,7 @@ function App() {
             )}
           </IconButton>
         </Box>
-        {isSuccess && (
-          <SearchBar data={data} isLoading={isLoading} isSuccess={isSuccess} />
-        )}
+        {isSuccess && <SearchBar data={data} isSuccess={isSuccess} />}
         <Box
           sx={{
             display: 'flex',
@@ -143,8 +146,8 @@ function App() {
                 page={page}
                 onChange={handleChange}
                 color='primary'
-                showFirstButton
-                showLastButton
+                showFirstButton={true}
+                showLastButton={true}
               />
             </Box>
           )}
@@ -196,8 +199,8 @@ function App() {
                 page={page}
                 onChange={handleChange}
                 color='primary'
-                showFirstButton
-                showLastButton
+                showFirstButton={true}
+                showLastButton={true}
               />
             </Box>
           )}
