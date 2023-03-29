@@ -12,14 +12,21 @@ import {
 } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import InfoModal from './InfoModal';
+import { useSelector } from 'react-redux';
 
 const ProfileCard = ({ data, isLoading }: any) => {
   const [open, setOpen] = useState(false);
-  console.log(data);
+  const searchInput = useSelector((state: any) => state.search.searchInput);
+  console.log(searchInput);
+
+  const names = data.map((subs: any) => subs.name);
+  console.log(names);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
+  //TODO compare searchInput with data names and display only the matchings otherwise use the full data
 
   return data.map((data: any) => (
     <Grid item xs={5} md={3} sm={3} lg={3} key={data.id}>

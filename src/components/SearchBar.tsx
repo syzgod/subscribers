@@ -1,24 +1,12 @@
 import { Box, Button, FormControl, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSearchInput } from '../store/reducers/searchSlice';
 
-const SearchBar = ({ data, isSuccess }: any) => {
-  const [inputText, setInputText] = React.useState('');
-
-  if (isSuccess && inputText) {
-    const matchingItems = data.filter((item: any) =>
-      item.name.toLowerCase().includes(inputText.toLowerCase())
-    );
-    const matchingNames = matchingItems.map((item: any) => item.name);
-    console.log(matchingNames);
-  }
-
-  const handleSearch = (
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
-    setInputText(e.target.value);
-    console.log(inputText);
-  };
+const SearchBar = () => {
+  const searchInput = useSelector((state: any) => state.value);
+  const dispatch = useDispatch();
 
   return (
     <FormControl>
@@ -29,8 +17,10 @@ const SearchBar = ({ data, isSuccess }: any) => {
           label='Search'
           variant='standard'
           helperText='Please enter a name or country'
-          value={inputText}
-          onChange={handleSearch}
+          value={searchInput}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            dispatch(setSearchInput(e.target.value))
+          }
         />
       </Box>
       <Button variant='contained' sx={{ marginTop: '10px' }}>

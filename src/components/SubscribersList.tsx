@@ -1,8 +1,6 @@
 import ProfileCard from './ProfileCard';
 
 const SubscribersList = ({ subscribers, isLoading }: any) => {
-  console.log(subscribers);
-
   if (isLoading) {
     return <div>Loading...</div>;
   }

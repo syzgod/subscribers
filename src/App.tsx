@@ -103,7 +103,7 @@ function App() {
             )}
           </IconButton>
         </Box>
-        {isSuccess && <SearchBar data={data} isSuccess={isSuccess} />}
+        {isSuccess && <SearchBar />}
         <Box
           sx={{
             display: 'flex',

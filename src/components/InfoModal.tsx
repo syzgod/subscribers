@@ -14,7 +14,6 @@ const style = {
 };
 
 const InfoModal = ({ open, setOpen, data, isLoading, isSuccess }: any) => {
-  console.log(data);
   const handleClose = () => setOpen(false);
 
   const dateFormatter = (date: string) => {
