@@ -6,7 +6,7 @@ interface searchState {
 }
 
 const initialState: searchState = {
-  searchInput: '',
+  searchInput: 'Nor',
 };
 
 export const searchSlice = createSlice({

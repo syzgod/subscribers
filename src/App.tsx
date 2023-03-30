@@ -29,7 +29,7 @@ function App() {
   const [page, setPage] = React.useState<number>(1);
   const [pageSize, setLimit] = React.useState<number>(7);
   const {
-    data: subscribers,
+    data: subscribersPerPage,
     isLoading,
     isError,
     error,
@@ -38,7 +38,7 @@ function App() {
     page,
     limit: pageSize,
   });
-  const { data } = useGetAllSubscribersQuery('/');
+  const { data: allSubscribers } = useGetAllSubscribersQuery('/');
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -142,7 +142,7 @@ function App() {
               </FormControl>
               <Pagination
                 size='large'
-                count={Math.ceil(data?.length / pageSize)}
+                count={Math.ceil(allSubscribers?.length / pageSize)}
                 page={page}
                 onChange={handleChange}
                 color='primary'
@@ -163,7 +163,11 @@ function App() {
               alignItems: 'center',
             }}
           >
-            <SubscribersList subscribers={subscribers} isLoading={isLoading} />
+            <SubscribersList
+              subscribersPerPage={subscribersPerPage}
+              isLoading={isLoading}
+              allSubscribers={allSubscribers}
+            />
           </Grid>
           {isSuccess && (
             <Box
@@ -195,7 +199,7 @@ function App() {
               </FormControl>
               <Pagination
                 size='large'
-                count={Math.ceil(data?.length / pageSize)}
+                count={Math.ceil(allSubscribers?.length / pageSize)}
                 page={page}
                 onChange={handleChange}
                 color='primary'
