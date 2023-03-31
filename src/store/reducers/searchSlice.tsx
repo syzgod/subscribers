@@ -1,12 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { enqueueSnackbar } from 'notistack';
 
 interface searchState {
   searchInput: string;
 }
 
 const initialState: searchState = {
-  searchInput: 'Nor',
+  searchInput: '',
 };
 
 export const searchSlice = createSlice({

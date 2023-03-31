@@ -39,7 +39,7 @@ export const subscribers = createApi({
     baseUrl: url,
   }),
   endpoints: (builder) => ({
-    getSubscribers: builder.query<
+    getSubscribersPerPage: builder.query<
       ListResponse<Subscribers>,
       { page?: number; limit?: number }
     >({
@@ -53,5 +53,5 @@ export const subscribers = createApi({
 
 export type SubscribersListResponse = ListResponse<Subscribers>;
 
-export const { useGetSubscribersQuery, useGetAllSubscribersQuery } =
+export const { useGetSubscribersPerPageQuery, useGetAllSubscribersQuery } =
   subscribers;

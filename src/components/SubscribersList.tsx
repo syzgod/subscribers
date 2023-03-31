@@ -1,10 +1,6 @@
 import ProfileCard from './ProfileCard';
 
-const SubscribersList = ({
-  subscribersPerPage,
-  allSubscribers,
-  isLoading,
-}: any) => {
+const SubscribersList = ({ subscribersPerPage, isLoading }: any) => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -13,12 +9,7 @@ const SubscribersList = ({
     return <div>No subscribers found :(</div>;
   }
 
-  return (
-    <ProfileCard
-      allSubscribers={allSubscribers}
-      subscribersPerPage={subscribersPerPage}
-    />
-  );
+  return <ProfileCard subscribersPerPage={subscribersPerPage} />;
 };
 
 export default SubscribersList;

@@ -20,32 +20,46 @@ import SubscribersList from './components/SubscribersList';
 import {
   SubscribersListResponse,
   useGetAllSubscribersQuery,
-  useGetSubscribersQuery,
+  useGetSubscribersPerPageQuery,
 } from './components/services/subscribers';
 import { enqueueSnackbar } from 'notistack';
 import SearchBar from './components/SearchBar';
 
+//BUG: Show only a certain amount of subscribers if searched.
+//TODO: Reflect pageSize in render without API call
+//TODO: Remake Pagination to be custom?
+
 function App() {
   const [page, setPage] = React.useState<number>(1);
-  const [pageSize, setLimit] = React.useState<number>(7);
+  const [pageSize, setPageSize] = React.useState<number>(7);
+  const [searchedSubs, setSearchedSubs] = React.useState<Array<{}>>([]);
   const {
     data: subscribersPerPage,
     isLoading,
     isError,
     error,
     isSuccess,
-  } = useGetSubscribersQuery<SubscribersListResponse>({
+  } = useGetSubscribersPerPageQuery<SubscribersListResponse>({
     page,
     limit: pageSize,
   });
   const { data: allSubscribers } = useGetAllSubscribersQuery('/');
+
+  const searchInput = useSelector((state: any) => state.search.searchInput);
+
+  React.useEffect(() => {
+    const matchingNames = allSubscribers?.filter((subs: any) =>
+      subs.name.toLowerCase().includes(searchInput.toLowerCase())
+    );
+    setSearchedSubs(matchingNames);
+  }, [searchInput, allSubscribers]);
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
 
   const onSelectChange = (event: SelectChangeEvent) => {
-    setLimit(parseInt(event.target.value));
+    setPageSize(parseInt(event.target.value));
   };
 
   const theme = useTheme();
@@ -142,7 +156,7 @@ function App() {
               </FormControl>
               <Pagination
                 size='large'
-                count={Math.ceil(allSubscribers?.length / pageSize)}
+                count={Math.ceil(searchedSubs?.length / pageSize)}
                 page={page}
                 onChange={handleChange}
                 color='primary'
@@ -164,9 +178,11 @@ function App() {
             }}
           >
             <SubscribersList
-              subscribersPerPage={subscribersPerPage}
+              subscribersPerPage={
+                searchedSubs ? searchedSubs : subscribersPerPage
+              }
               isLoading={isLoading}
-              allSubscribers={allSubscribers}
+              allSubscribers={searchedSubs}
             />
           </Grid>
           {isSuccess && (
@@ -199,7 +215,7 @@ function App() {
               </FormControl>
               <Pagination
                 size='large'
-                count={Math.ceil(allSubscribers?.length / pageSize)}
+                count={Math.ceil(searchedSubs?.length / pageSize)}
                 page={page}
                 onChange={handleChange}
                 color='primary'
