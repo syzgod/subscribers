@@ -24,6 +24,7 @@ import {
 } from './components/services/subscribers';
 import { enqueueSnackbar } from 'notistack';
 import SearchBar from './components/SearchBar';
+import usePagination from '@mui/material/usePagination/usePagination';
 
 //BUG: Show only a certain amount of subscribers if searched.
 //TODO: Reflect pageSize in render without API call
@@ -33,6 +34,8 @@ function App() {
   const [page, setPage] = React.useState<number>(1);
   const [pageSize, setPageSize] = React.useState<number>(7);
   const [searchedSubs, setSearchedSubs] = React.useState<Array<{}>>([]);
+  const count = Math.ceil(searchedSubs?.length / pageSize);
+  const _DATA = usePagination(searchedSubs, pageSize);
   const {
     data: subscribersPerPage,
     isLoading,
@@ -56,6 +59,7 @@ function App() {
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
+    _DATA.jump(value);
   };
 
   const onSelectChange = (event: SelectChangeEvent) => {
@@ -156,7 +160,7 @@ function App() {
               </FormControl>
               <Pagination
                 size='large'
-                count={Math.ceil(searchedSubs?.length / pageSize)}
+                count={count}
                 page={page}
                 onChange={handleChange}
                 color='primary'
@@ -215,7 +219,7 @@ function App() {
               </FormControl>
               <Pagination
                 size='large'
-                count={Math.ceil(searchedSubs?.length / pageSize)}
+                count={count}
                 page={page}
                 onChange={handleChange}
                 color='primary'
