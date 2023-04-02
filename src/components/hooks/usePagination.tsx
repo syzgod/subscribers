@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-function usePagination(searchedSubs: {}[], pageSize: number) {
-  const [currentPage, setCurrentPage] = useState(1);
+function usePagination(searchedSubs: any, pageSize: any) {
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const maxPage = Math.ceil(searchedSubs.length / pageSize);
 
   function currentData() {
