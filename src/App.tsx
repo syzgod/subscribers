@@ -24,7 +24,7 @@ import {
 } from './components/services/subscribers';
 import { enqueueSnackbar } from 'notistack';
 import SearchBar from './components/SearchBar';
-import usePagination from '@mui/material/usePagination/usePagination';
+import useAppPagination from '@mui/material/usePagination/usePagination';
 
 //BUG: Show only a certain amount of subscribers if searched.
 //TODO: Reflect pageSize in render without API call
@@ -35,7 +35,6 @@ function App() {
   const [pageSize, setPageSize] = React.useState<number>(7);
   const [searchedSubs, setSearchedSubs] = React.useState<Array<{}>>([]);
   const count = Math.ceil(searchedSubs?.length / pageSize);
-  const _DATA = usePagination(searchedSubs, pageSize);
   const {
     data: subscribersPerPage,
     isLoading,
@@ -50,6 +49,11 @@ function App() {
 
   const searchInput = useSelector((state: any) => state.search.searchInput);
 
+  const cardsPerPage = allSubscribers.slice(
+    page * pageSize,
+    page * pageSize + pageSize
+  );
+
   React.useEffect(() => {
     const matchingNames = allSubscribers?.filter((subs: any) =>
       subs.name.toLowerCase().includes(searchInput.toLowerCase())
@@ -59,7 +63,6 @@ function App() {
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
-    _DATA.jump(value);
   };
 
   const onSelectChange = (event: SelectChangeEvent) => {
@@ -187,6 +190,7 @@ function App() {
               }
               isLoading={isLoading}
               allSubscribers={searchedSubs}
+              cardsPerPage={cardsPerPage}
             />
           </Grid>
           {isSuccess && (
