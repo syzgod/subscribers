@@ -186,11 +186,10 @@ function App() {
           >
             <SubscribersList
               subscribersPerPage={
-                searchedSubs ? searchedSubs : subscribersPerPage
+                cardsPerPage ? cardsPerPage : subscribersPerPage
               }
               isLoading={isLoading}
-              allSubscribers={searchedSubs}
-              cardsPerPage={cardsPerPage}
+              allSubscribers={cardsPerPage}
             />
           </Grid>
           {isSuccess && (
