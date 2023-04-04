@@ -14,7 +14,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import InfoModal from './InfoModal';
 import { useSelector } from 'react-redux';
 
-const ProfileCard = ({ subscribersPerPage, isLoading }: any) => {
+const ProfileCard = ({ cardsPerPage, isLoading }: any) => {
   const [open, setOpen] = useState(false);
   const searchInput = useSelector((state: any) => state.search.searchInput);
 
@@ -22,9 +22,17 @@ const ProfileCard = ({ subscribersPerPage, isLoading }: any) => {
     return <div>Loading...</div>;
   }
 
-  return (searchInput > 0 || subscribersPerPage).map((data: any) => (
-    <Grid item xs={5} md={3} sm={3} lg={3} key={data.id}>
-      <Card elevation={6}>
+  return (searchInput > 0 || cardsPerPage).map((data: any) => (
+    <Grid
+      item
+      sm={3}
+      key={data.id}
+      sx={{
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Card elevation={6} sx={{ minWidth: '320px' }}>
         <CardHeader
           titleTypographyProps={{ variant: 'h5' }}
           avatar={

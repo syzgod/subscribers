@@ -23,9 +23,6 @@ const SearchBar = () => {
           }
         />
       </Box>
-      <Button variant='contained' sx={{ marginTop: '10px' }}>
-        Search
-      </Button>
     </FormControl>
   );
 };

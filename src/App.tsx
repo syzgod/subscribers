@@ -20,15 +20,9 @@ import SubscribersList from './components/SubscribersList';
 import {
   SubscribersListResponse,
   useGetAllSubscribersQuery,
-  useGetSubscribersPerPageQuery,
 } from './components/services/subscribers';
 import { enqueueSnackbar } from 'notistack';
 import SearchBar from './components/SearchBar';
-import useAppPagination from '@mui/material/usePagination/usePagination';
-
-//BUG: Show only a certain amount of subscribers if searched.
-//TODO: Reflect pageSize in render without API call
-//TODO: Remake Pagination to be custom?
 
 function App() {
   const [page, setPage] = React.useState<number>(1);
@@ -36,22 +30,18 @@ function App() {
   const [searchedSubs, setSearchedSubs] = React.useState<Array<{}>>([]);
   const count = Math.ceil(searchedSubs?.length / pageSize);
   const {
-    data: subscribersPerPage,
+    data: allSubscribers,
     isLoading,
     isError,
     error,
     isSuccess,
-  } = useGetSubscribersPerPageQuery<SubscribersListResponse>({
-    page,
-    limit: pageSize,
-  });
-  const { data: allSubscribers } = useGetAllSubscribersQuery('/');
+  } = useGetAllSubscribersQuery<SubscribersListResponse>('/');
 
   const searchInput = useSelector((state: any) => state.search.searchInput);
 
-  const cardsPerPage = allSubscribers.slice(
-    page * pageSize,
-    page * pageSize + pageSize
+  const cardsPerPage = (searchedSubs || allSubscribers)?.slice(
+    (page - 1) * pageSize,
+    (page - 1) * pageSize + pageSize
   );
 
   React.useEffect(() => {
@@ -59,6 +49,7 @@ function App() {
       subs.name.toLowerCase().includes(searchInput.toLowerCase())
     );
     setSearchedSubs(matchingNames);
+    setPage(1);
   }, [searchInput, allSubscribers]);
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -67,6 +58,7 @@ function App() {
 
   const onSelectChange = (event: SelectChangeEvent) => {
     setPageSize(parseInt(event.target.value));
+    setPage(1);
   };
 
   const theme = useTheme();
@@ -138,7 +130,10 @@ function App() {
               justifyContent={'center'}
               alignItems={'center'}
               display={'flex'}
-              sx={{ margin: '20px 0px' }}
+              sx={{
+                margin: '20px 0px',
+                flexDirection: { xs: 'column', sm: 'row' },
+              }}
             >
               <FormControl
                 variant='standard'
@@ -163,7 +158,7 @@ function App() {
               </FormControl>
               <Pagination
                 size='large'
-                count={count}
+                count={searchedSubs && count}
                 page={page}
                 onChange={handleChange}
                 color='primary'
@@ -185,9 +180,6 @@ function App() {
             }}
           >
             <SubscribersList
-              subscribersPerPage={
-                searchedSubs ? searchedSubs : subscribersPerPage
-              }
               isLoading={isLoading}
               allSubscribers={searchedSubs}
               cardsPerPage={cardsPerPage}
@@ -198,7 +190,10 @@ function App() {
               justifyContent={'center'}
               alignItems={'center'}
               display={'flex'}
-              sx={{ margin: '20px 0px' }}
+              sx={{
+                margin: '20px 0px',
+                flexDirection: { xs: 'column', sm: 'row' },
+              }}
             >
               <FormControl
                 variant='standard'
@@ -223,7 +218,7 @@ function App() {
               </FormControl>
               <Pagination
                 size='large'
-                count={count}
+                count={searchedSubs && count}
                 page={page}
                 onChange={handleChange}
                 color='primary'
