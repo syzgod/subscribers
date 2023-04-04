@@ -181,7 +181,6 @@ function App() {
           >
             <SubscribersList
               isLoading={isLoading}
-              allSubscribers={searchedSubs}
               cardsPerPage={cardsPerPage}
             />
           </Grid>
