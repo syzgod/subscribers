@@ -65,11 +65,16 @@ function App() {
   const dispatch = useDispatch();
   const darkMode = useSelector((state: any) => state.theme.darkMode);
 
-  if (isLoading) {
-    enqueueSnackbar('Fetching data...', {
-      variant: 'info',
-    });
-  }
+  React.useEffect(() => {
+    if (isLoading) {
+      enqueueSnackbar('Loading data...', {
+        variant: 'info',
+      });
+    }
+    if (isSuccess) {
+      enqueueSnackbar('Data fetched!', { variant: 'success' });
+    }
+  }, [isLoading, enqueueSnackbar]);
 
   if (isError) {
     return <h1>Error occurred during fetching</h1>;

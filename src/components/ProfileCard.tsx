@@ -16,11 +16,19 @@ import { useSelector } from 'react-redux';
 
 const ProfileCard = ({ cardsPerPage, isLoading }: any) => {
   const [open, setOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+
   const searchInput = useSelector((state: any) => state.search.searchInput);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
+  const handleModal = (data: any) => {
+    console.log(data);
+    setSelectedUser(data);
+    setOpen(true);
+  };
 
   return (searchInput > 0 || cardsPerPage).map((data: any) => (
     <Grid
@@ -52,7 +60,7 @@ const ProfileCard = ({ cardsPerPage, isLoading }: any) => {
             <Typography>City: {data.city}</Typography>
             <Typography variant='body2'>Address: {data.address}</Typography>
             <Button
-              onClick={() => setOpen(true)}
+              onClick={() => handleModal(data)}
               variant='contained'
               color='primary'
               endIcon={<InfoIcon />}
@@ -64,7 +72,7 @@ const ProfileCard = ({ cardsPerPage, isLoading }: any) => {
             <InfoModal
               open={open}
               setOpen={setOpen}
-              data={data}
+              user={selectedUser}
               isLoading={isLoading}
             />
           </Box>

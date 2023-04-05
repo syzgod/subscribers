@@ -1,34 +1,28 @@
 import { Box, Button, Modal, Typography } from '@mui/material';
-import { enqueueSnackbar } from 'notistack';
 
 const style = {
-  position: 'absolute',
+  position: 'absolute' as 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: 'background.default',
+  bgcolor: 'background.paper',
   border: '2px solid #c2c2c2',
   boxShadow: 24,
   p: 4,
 };
 
-const InfoModal = ({ open, setOpen, data, isLoading, isSuccess }: any) => {
-  const handleClose = () => setOpen(false);
+const InfoModal = ({ open, setOpen, user }: any) => {
+  console.log(user);
+  if (!user) {
+    return null;
+  }
 
+  const handleClose = () => setOpen(false);
   const dateFormatter = (date: string) => {
     const unformattedDate = new Date(date);
     return unformattedDate.toLocaleString();
   };
-
-  if (isLoading) {
-    enqueueSnackbar('Fetching data...', { variant: 'info' });
-    return <div>Loading...</div>;
-  }
-
-  if (isSuccess) {
-    enqueueSnackbar('Data fetched!', { variant: 'success' });
-  }
 
   return (
     <Modal
@@ -44,7 +38,7 @@ const InfoModal = ({ open, setOpen, data, isLoading, isSuccess }: any) => {
           component='span'
           sx={{ fontWeight: 'bold' }}
         >
-          {data.name}
+          {user.name}
         </Typography>
         <Typography
           id='modal-modal-description'
@@ -59,11 +53,11 @@ const InfoModal = ({ open, setOpen, data, isLoading, isSuccess }: any) => {
             Accounts:{' '}
           </Typography>
           <Typography>
-            Created: {dateFormatter(data.accounts[0]?.created)}
+            Created: {dateFormatter(user.accounts[0]?.created)}
           </Typography>
-          <Typography>Account name: {data.accounts[0]?.name}</Typography>
-          <Typography>Account balance: {data.accounts[0]?.balance}</Typography>
-          Subscriber ID: {data.accounts[0]?.subscriberId}
+          <Typography>Account name: {user.accounts[0]?.name}</Typography>
+          <Typography>Account balance: {user.accounts[0]?.balance}</Typography>
+          Subscriber ID: {user.accounts[0]?.subscriberId}
         </Typography>
         <Typography
           id='modal-modal-description'
@@ -78,11 +72,11 @@ const InfoModal = ({ open, setOpen, data, isLoading, isSuccess }: any) => {
             Calls:{' '}
           </Typography>
           <Typography>
-            Created: {dateFormatter(data.calls[0]?.created)}
+            Created: {dateFormatter(user.calls[0]?.created)}
           </Typography>
-          <Typography>Account name: {data.calls[0]?.name}</Typography>
-          <Typography>Account balance: {data.calls[0]?.balance}</Typography>
-          Subscriber ID: {data.calls[0]?.subscriberId}
+          <Typography>Account name: {user.calls[0]?.name}</Typography>
+          <Typography>Account balance: {user.calls[0]?.balance}</Typography>
+          Subscriber ID: {user.calls[0]?.subscriberId}
         </Typography>
         <Button
           variant='contained'
