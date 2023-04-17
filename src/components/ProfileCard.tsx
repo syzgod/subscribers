@@ -38,6 +38,7 @@ const ProfileCard = ({ cardsPerPage, isLoading }: any) => {
       sx={{
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: 'transparent',
       }}
     >
       <Card elevation={6} sx={{ minWidth: '320px' }}>

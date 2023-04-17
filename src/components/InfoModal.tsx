@@ -25,69 +25,73 @@ const InfoModal = ({ open, setOpen, user }: any) => {
   };
 
   return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby='modal-modal-title'
-      aria-describedby='modal-modal-description'
-    >
-      <Box sx={style}>
-        <Typography
-          id='modal-modal-title'
-          variant='h4'
-          component='span'
-          sx={{ fontWeight: 'bold' }}
-        >
-          {user.name}
-        </Typography>
-        <Typography
-          id='modal-modal-description'
-          sx={{ mt: 2 }}
-          component={'section'}
-        >
+    <Box>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
+      >
+        <Box sx={style}>
           <Typography
-            variant='h6'
+            id='modal-modal-title'
+            variant='h4'
+            component='span'
             sx={{ fontWeight: 'bold' }}
-            component={'span'}
           >
-            Accounts:{' '}
+            {user.name}
           </Typography>
-          <Typography>
-            Created: {dateFormatter(user.accounts[0]?.created)}
-          </Typography>
-          <Typography>Account name: {user.accounts[0]?.name}</Typography>
-          <Typography>Account balance: {user.accounts[0]?.balance}</Typography>
-          Subscriber ID: {user.accounts[0]?.subscriberId}
-        </Typography>
-        <Typography
-          id='modal-modal-description'
-          sx={{ mt: 2 }}
-          component={'section'}
-        >
           <Typography
-            variant='h6'
-            sx={{ fontWeight: 'bold' }}
-            component={'span'}
+            id='modal-modal-description'
+            sx={{ mt: 2 }}
+            component={'section'}
           >
-            Calls:{' '}
+            <Typography
+              variant='h6'
+              sx={{ fontWeight: 'bold' }}
+              component={'span'}
+            >
+              Accounts:{' '}
+            </Typography>
+            <Typography>
+              Created: {dateFormatter(user.accounts[0]?.created)}
+            </Typography>
+            <Typography>Account name: {user.accounts[0]?.name}</Typography>
+            <Typography>
+              Account balance: {user.accounts[0]?.balance}
+            </Typography>
+            Subscriber ID: {user.accounts[0]?.subscriberId}
           </Typography>
-          <Typography>
-            Created: {dateFormatter(user.calls[0]?.created)}
+          <Typography
+            id='modal-modal-description'
+            sx={{ mt: 2 }}
+            component={'section'}
+          >
+            <Typography
+              variant='h6'
+              sx={{ fontWeight: 'bold' }}
+              component={'span'}
+            >
+              Calls:{' '}
+            </Typography>
+            <Typography>
+              Created: {dateFormatter(user.calls[0]?.created)}
+            </Typography>
+            <Typography>Account name: {user.calls[0]?.name}</Typography>
+            <Typography>Account balance: {user.calls[0]?.balance}</Typography>
+            Subscriber ID: {user.calls[0]?.subscriberId}
           </Typography>
-          <Typography>Account name: {user.calls[0]?.name}</Typography>
-          <Typography>Account balance: {user.calls[0]?.balance}</Typography>
-          Subscriber ID: {user.calls[0]?.subscriberId}
-        </Typography>
-        <Button
-          variant='contained'
-          color='primary'
-          sx={{ mt: '10px' }}
-          onClick={handleClose}
-        >
-          Close
-        </Button>
-      </Box>
-    </Modal>
+          <Button
+            variant='contained'
+            color='primary'
+            sx={{ mt: '10px' }}
+            onClick={handleClose}
+          >
+            Close
+          </Button>
+        </Box>
+      </Modal>
+    </Box>
   );
 };
 

@@ -32,6 +32,7 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <SnackbarProvider
+      anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
       maxSnack={3}
       autoHideDuration={1000}
       preventDuplicate
