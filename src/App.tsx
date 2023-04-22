@@ -8,6 +8,7 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
+  Skeleton,
 } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useTheme } from '@mui/material/styles';
@@ -121,6 +122,7 @@ function App() {
             )}
           </IconButton>
         </Box>
+        {isLoading && <Skeleton />}
         {isSuccess && <SearchBar />}
         <Box
           sx={{

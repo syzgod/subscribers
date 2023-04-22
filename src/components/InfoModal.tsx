@@ -39,7 +39,7 @@ const InfoModal = ({ open, setOpen, user }: any) => {
             component='span'
             sx={{ fontWeight: 'bold' }}
           >
-            {user.name}
+            {user?.name}
           </Typography>
           <Typography
             id='modal-modal-description'
@@ -56,11 +56,13 @@ const InfoModal = ({ open, setOpen, user }: any) => {
             <Typography>
               Created: {dateFormatter(user.accounts[0]?.created)}
             </Typography>
-            <Typography>Account name: {user.accounts[0]?.name}</Typography>
             <Typography>
-              Account balance: {user.accounts[0]?.balance}
+              Account name: {user.accounts[0]?.name || 'no data'}
             </Typography>
-            Subscriber ID: {user.accounts[0]?.subscriberId}
+            <Typography>
+              Account balance: {user.accounts[0]?.balance || 'no data'}
+            </Typography>
+            Subscriber ID: {user.accounts[0]?.subscriberId || 'no data'}
           </Typography>
           <Typography
             id='modal-modal-description'
@@ -77,9 +79,13 @@ const InfoModal = ({ open, setOpen, user }: any) => {
             <Typography>
               Created: {dateFormatter(user.calls[0]?.created)}
             </Typography>
-            <Typography>Account name: {user.calls[0]?.name}</Typography>
-            <Typography>Account balance: {user.calls[0]?.balance}</Typography>
-            Subscriber ID: {user.calls[0]?.subscriberId}
+            <Typography>
+              Account name: {user.calls[0]?.name || 'no data'}
+            </Typography>
+            <Typography>
+              Account balance: {user.calls[0]?.balance || 'no data'}
+            </Typography>
+            Subscriber ID: {user.calls[0]?.subscriberId || 'no data'}
           </Typography>
           <Button
             variant='contained'
