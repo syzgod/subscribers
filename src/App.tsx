@@ -122,7 +122,6 @@ function App() {
             )}
           </IconButton>
         </Box>
-        {isLoading && <Skeleton />}
         {isSuccess && <SearchBar />}
         <Box
           sx={{

@@ -9,6 +9,7 @@ import {
   CardHeader,
   Avatar,
   CardContent,
+  CircularProgress,
 } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import InfoModal from './InfoModal';
@@ -25,6 +26,10 @@ const ProfileCard = ({ cardsPerPage, isLoading }: any) => {
     setSelectedUser(data);
     setOpen(true);
   };
+
+  if (isLoading) {
+    return <CircularProgress />;
+  }
 
   return (
     <>
