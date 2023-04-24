@@ -13,7 +13,6 @@ const style = {
 };
 
 const InfoModal = ({ open, setOpen, user }: any) => {
-  console.log(user);
   if (!user) {
     return null;
   }

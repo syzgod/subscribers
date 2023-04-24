@@ -22,7 +22,6 @@ const ProfileCard = ({ cardsPerPage, isLoading }: any) => {
   const searchInput = useSelector((state: any) => state.search.searchInput);
 
   const handleModal = (data: any) => {
-    console.log(data);
     setSelectedUser(data);
     setOpen(true);
   };
