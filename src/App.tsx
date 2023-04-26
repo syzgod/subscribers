@@ -8,7 +8,6 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
-  Skeleton,
 } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useTheme } from '@mui/material/styles';
@@ -141,6 +140,15 @@ function App() {
                 flexDirection: { xs: 'column', sm: 'row' },
               }}
             >
+              <Pagination
+                size='large'
+                count={searchedSubs && count}
+                page={page}
+                onChange={handleChange}
+                color='primary'
+                showFirstButton={true}
+                showLastButton={true}
+              />
               <FormControl
                 variant='standard'
                 sx={{ m: 1, minWidth: 80 }}
@@ -162,15 +170,6 @@ function App() {
                   <MenuItem value={20}>20</MenuItem>
                 </Select>
               </FormControl>
-              <Pagination
-                size='large'
-                count={searchedSubs && count}
-                page={page}
-                onChange={handleChange}
-                color='primary'
-                showFirstButton={true}
-                showLastButton={true}
-              />
             </Box>
           )}
           <Grid
@@ -200,6 +199,15 @@ function App() {
                 flexDirection: { xs: 'column', sm: 'row' },
               }}
             >
+              <Pagination
+                size='large'
+                count={searchedSubs && count}
+                page={page}
+                onChange={handleChange}
+                color='primary'
+                showFirstButton={true}
+                showLastButton={true}
+              />
               <FormControl
                 variant='standard'
                 sx={{ m: 1, minWidth: 80 }}
@@ -221,15 +229,6 @@ function App() {
                   <MenuItem value={20}>20</MenuItem>
                 </Select>
               </FormControl>
-              <Pagination
-                size='large'
-                count={searchedSubs && count}
-                page={page}
-                onChange={handleChange}
-                color='primary'
-                showFirstButton={true}
-                showLastButton={true}
-              />
             </Box>
           )}
         </Box>

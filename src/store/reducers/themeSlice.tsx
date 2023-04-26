@@ -1,7 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { enqueueSnackbar } from 'notistack';
-import useMediaQuery from '@mui/material/useMediaQuery';
-
 interface themeState {
   darkMode: boolean | null;
 }
