@@ -105,7 +105,7 @@ function App() {
             bgcolor: 'background.default',
             color: 'text.primary',
             borderRadius: 1,
-            p: 3,
+            p: 1,
           }}
         >
           {darkMode ? 'Dark' : 'Light'} mode
@@ -137,7 +137,6 @@ function App() {
               display={'flex'}
               sx={{
                 margin: '20px 0px',
-                flexDirection: { xs: 'column', sm: 'row' },
               }}
             >
               <Pagination
@@ -155,7 +154,7 @@ function App() {
                 size='small'
               >
                 <InputLabel id='simple-select-autowidth-label'>
-                  Subscribers
+                  Per page
                 </InputLabel>
                 <Select
                   labelId='simple-select-autowidth-label'
@@ -196,7 +195,6 @@ function App() {
               display={'flex'}
               sx={{
                 margin: '20px 0px',
-                flexDirection: { xs: 'column', sm: 'row' },
               }}
             >
               <Pagination
@@ -214,7 +212,7 @@ function App() {
                 size='small'
               >
                 <InputLabel id='simple-select-autowidth-label'>
-                  Subscribers
+                  Per page
                 </InputLabel>
                 <Select
                   labelId='simple-select-autowidth-label'
