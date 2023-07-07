@@ -2,7 +2,7 @@
 
 ## Description
 
-A simple App using API and MUI(Material UI) for React. The purpose of the project was to deepen my understand of handling APIs and to work with MUI to get familiar with a component library so in the future I can develop websites efficient and be able to use other component libraries as well. Added Redux Toolkit to the tech stack so I could learn a bit more about it and use it in a live project. 
+A simple App using API and MUI(Material UI) for React. The purpose of the project was to deepen my understanding of handling APIs and to work with MUI to get familiar with a component library so in the future I can develop websites efficient and be able to use other component libraries as well. Added Redux Toolkit to the tech stack so I could learn a bit more about it and use it in a live project. 
 
 ## Inspired by few of the tutorials found online
 
